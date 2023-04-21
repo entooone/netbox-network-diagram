@@ -8,6 +8,7 @@ menu = PluginMenu(
             PluginMenuItem(
                 link='plugins:netbox_network_diagram:network_diagram',
                 link_text='Network Diagram',
+                permissions=["dcim.view_site", "dcim.view_device"],
             ),
         ),),
     ),

@@ -1,6 +1,7 @@
 import json
 from django.shortcuts import render
 from django.views.generic import View
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from dcim.models import (
     Device, 
     Cable, 
@@ -11,7 +12,9 @@ from dcim.models import (
 #
 # NetworkDiagram views
 #
-class NetworkDiagramView(View):
+class NetworkDiagramView(PermissionRequiredMixin, View):
+    permission_required = ("dcim.view_site", "dcim.view_device")
+
     def get(self, request):
         # 全ての Device を nodes に追加します。
         nodes = []
