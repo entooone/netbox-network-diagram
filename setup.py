@@ -14,7 +14,7 @@ setup(
     url="https://github.com/entooone/netbox-network-diagram",
     author="entooone",
     author_email="entooone@gmail.com",
-    license='MIT',
+    license='Apache License 2.0',
     install_requires=[],
     keywords=["netbox-plugin"],
     packages=find_packages(),
