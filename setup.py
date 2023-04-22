@@ -7,7 +7,7 @@ with open("README.md") as readme_file:
 
 setup(
     name="netbox-network-diagram",
-    version="0.1.2",
+    version="0.2.0",
     description="A plugin to render network diagram in NetBox.",
     long_description=long_description,
     long_description_content_type="text/markdown",
