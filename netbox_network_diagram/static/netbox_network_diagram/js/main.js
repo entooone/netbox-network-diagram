@@ -34,4 +34,21 @@ async function downloadSVG() {
     document.body.removeChild(downloadLink);
 }
 
+async function setupDiagram() {
+    const res = await fetch("/plugins/network-diagram/network-diagram-data");
+    const data = await res.json();
+
+    const diagram = new Diagram("#diagram", data, {
+        bundle: true,
+        tooltip: "hover",
+        width: 1200,
+        height: 900,
+    });
+    diagram.init("loopback", "interface", "description", "type");
+}
+
+
 document.getElementById("download-svg-button").addEventListener("click", downloadSVG);
+(async () => {
+    await setupDiagram();
+})();

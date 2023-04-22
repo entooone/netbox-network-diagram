@@ -1,6 +1,7 @@
 import json
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from dcim.models import (
     Device,
@@ -9,14 +10,10 @@ from dcim.models import (
 )
 
 
-#
-# NetworkDiagram views
-#
-class NetworkDiagramView(PermissionRequiredMixin, View):
+class NetworkDiagramDataView(PermissionRequiredMixin, View):
     permission_required = ("dcim.view_site", "dcim.view_device")
 
     def get(self, request):
-        # 全ての Device を nodes に追加します。
         nodes = []
         device_list = Device.objects.all()
         for d in device_list:
@@ -76,8 +73,9 @@ class NetworkDiagramView(PermissionRequiredMixin, View):
         # inet-henge で描画できる形式にします。
         data = {"nodes": nodes, "links": links}
 
-        return render(
-            request,
-            "netbox_network_diagram/index.html",
-            {"data": json.dumps(data)},
-        )
+        return JsonResponse(data)
+
+
+class NetworkDiagramView(PermissionRequiredMixin, TemplateView):
+    permission_required = ("dcim.view_site", "dcim.view_device")
+    template_name = "netbox_network_diagram/index.html"
