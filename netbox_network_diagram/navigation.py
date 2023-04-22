@@ -1,15 +1,18 @@
 from extras.plugins import PluginMenu, PluginMenuItem
 
 menu = PluginMenu(
-    label='Network Diagram',
-    icon_class='mdi mdi-sitemap',
+    label="Network Diagram",
+    icon_class="mdi mdi-sitemap",
     groups=(
-        ('Network Diagram', (
-            PluginMenuItem(
-                link='plugins:netbox_network_diagram:network_diagram',
-                link_text='Network Diagram',
-                permissions=["dcim.view_site", "dcim.view_device"],
+        (
+            "Network Diagram",
+            (
+                PluginMenuItem(
+                    link="plugins:netbox_network_diagram:network_diagram",
+                    link_text="Network Diagram",
+                    permissions=["dcim.view_site", "dcim.view_device"],
+                ),
             ),
-        ),),
+        ),
     ),
 )

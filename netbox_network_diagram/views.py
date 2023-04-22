@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.views.generic import View
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from dcim.models import (
-    Device, 
-    Cable, 
+    Device,
+    Cable,
     Interface,
 )
 
@@ -24,15 +24,17 @@ class NetworkDiagramView(PermissionRequiredMixin, View):
             if d.location != None:
                 location = d.location.name
 
-            nodes.append({ 
-                "name": d.name, 
-                "group": location, 
-                "meta": {
-                    "description": d.description,
-                }, 
-                "icon": "/static/netbox_network_diagram/img/switch.png" 
-            })
-        
+            nodes.append(
+                {
+                    "name": d.name,
+                    "group": location,
+                    "meta": {
+                        "description": d.description,
+                    },
+                    "icon": "/static/netbox_network_diagram/img/switch.png",
+                }
+            )
+
         # Cable の接続情報を元に Device 間の接続を links に追加します。
         links = []
         cable_list = Cable.objects.all()
@@ -43,7 +45,9 @@ class NetworkDiagramView(PermissionRequiredMixin, View):
             a_termination = c.a_terminations[0]
             b_termination = c.b_terminations[0]
 
-            if not isinstance(a_termination, Interface) or not isinstance(b_termination, Interface):
+            if not isinstance(a_termination, Interface) or not isinstance(
+                b_termination, Interface
+            ):
                 continue
 
             if_source = a_termination.name
@@ -55,20 +59,22 @@ class NetworkDiagramView(PermissionRequiredMixin, View):
             source = a_termination.device.name
             target = b_termination.device.name
 
-            links.append({
-                "source": source,
-                "target": target,
-                "meta": {
-                    "interface": {
-                        "source": if_source,
-                        "target": if_target,
+            links.append(
+                {
+                    "source": source,
+                    "target": target,
+                    "meta": {
+                        "interface": {
+                            "source": if_source,
+                            "target": if_target,
+                        },
+                        "description": "",
                     },
-                    "description": "",
                 }
-            })
-        
+            )
+
         # inet-henge で描画できる形式にします。
-        data = { "nodes": nodes, "links": links}
+        data = {"nodes": nodes, "links": links}
 
         return render(
             request,

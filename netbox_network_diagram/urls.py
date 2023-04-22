@@ -5,5 +5,7 @@ from . import views
 
 urlpatterns = (
     # Network Diagram
-    path('network-diagram/', views.NetworkDiagramView.as_view(), name='network_diagram'),
+    path(
+        "network-diagram/", views.NetworkDiagramView.as_view(), name="network_diagram"
+    ),
 )
